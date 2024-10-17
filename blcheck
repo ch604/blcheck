@@ -525,8 +525,8 @@ If the IP is supplied, the PTR check cannot be executed and will be skipped.
 -p          Plain text output (no coloring, no interactive status)
 -h          The help you are just reading
 
-Result of the script is the number of blocklisted entries. So if the supplied
-IP is not blocklisted on any of the servers the result is 0.
+Exit code of the script is the number of blocklisted entries. So if the supplied
+IP is not blocklisted on any of the servers the exit code is 0.
 
 HELP
         exit;

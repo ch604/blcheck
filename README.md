@@ -11,7 +11,7 @@ Features
 * Automatic distinction between __domain or IP__
 * Performs __PTR validation__ (only if domain is supplied, does not work for IP)
 * 3 verbose (-v) levels and a quiet (-q) mode
-* The result of script is the number of servers which blocklisted the domain, so it can be used for any kind of __automated scripts or cronjobs__
+* The exit code of script is the number of servers which blocklisted the domain, so it can be used for any kind of __automated scripts or cronjobs__
 * Informative and pleasant output
 
 
@@ -38,8 +38,8 @@ If the IP is supplied, the PTR check cannot be executed and will be skipped.
 -p          Plain text output (no coloring, no interactive status)
 -h          The help you are just reading
 
-Result of the script is the number of blocklisted entries. So if the supplied
-IP is not blocklisted on any of the servers the result is 0.
+Exit code of the script is the number of blocklisted entries. So if the supplied
+IP is not blocklisted on any of the servers the exit code is 0.
 
 
 TODO
