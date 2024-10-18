@@ -522,7 +522,8 @@ If the IP is supplied, the PTR check cannot be executed and will be skipped.
 -c          Warn if the top level domain of the blocklist has expired
 -v          Verbose mode, can be used multiple times (up to -vvv)
 -q          Quiet mode with absolutely no output (useful for scripts)
--p          Plain text output (no coloring, no interactive status)
+-p          Plain text output (no coloring, no interactive status, useful
+	    for tee'd output to a text file)
 -h          The help you are just reading
 
 Exit code of the script is the number of blocklisted entries. So if the supplied
