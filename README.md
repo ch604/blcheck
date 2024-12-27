@@ -30,6 +30,7 @@ blcheck [options] <domain\_or\_IP>
 Supplied domain must be full qualified domain name.
 If the IP is supplied, the PTR check cannot be executed and will be skipped.
 
+<pre>
 -d dnshost  Use host as DNS server to make lookups
 -l file     Load blocklists from file, separated by space or new line
 -c          Warn if the top level domain of the blocklist has expired
@@ -38,6 +39,7 @@ If the IP is supplied, the PTR check cannot be executed and will be skipped.
 -p          Plain text output (no coloring, no interactive status, useful
             for tee'd output to a text file)
 -h          The help you are just reading
+</pre>
 
 Exit code of the script is the number of blocklisted entries. So if the supplied
 IP is not blocklisted on any of the servers the exit code is 0.
