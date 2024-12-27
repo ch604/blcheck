@@ -6,8 +6,8 @@
 # description       : Test any domain against more than 100 blocklists.
 # author            : Intellex
 # contributors      : Darko Poljak, Oliver Mueller, Andrej Walilko
-# date              : Sep 15 2020
-# version           : 0.7.6
+# date              : Dec 27 2024
+# version           : 0.7.7
 # usage             : blcheck [options] <domain_or_ip>
 # reference         : http://multirbl.valli.org/list/
 # code style        : https://google.github.io/styleguide/shell.xml
@@ -297,7 +297,6 @@
         bl.0spam.org
         nbl.0spam.org
         url.0spam.org
-        cbl.abuseat.org
         orvedb.aupads.org
         rsbl.aupads.org
         ips.backscatterer.org
@@ -785,7 +784,7 @@ parallel_check() {
         fi;
 
     # Invalid response
-    elif [[ ! "${RESPONSE}" =~ ${FILTER} ]]; then
+    elif [[ ! "${RESPONSE}" =~ ${FILTER} ]] || [[ ${RESPONSE:0:8} == "127.255." ]]; then
         if [[ "${VERBOSE}" -ge 1 ]]; then
             if [[ -z "${PLAIN}" ]]; then printf "\r"; fi
             printf "%s%sinvalid response (%s)%s\n" "${YELLOW}" "${PREFIX}" "${RESPONSE}" "${CLEAR}";
