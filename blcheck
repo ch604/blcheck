@@ -7,8 +7,8 @@
 # description       : Test any domain against more than 100 blocklists.
 # author            : Intellex
 # contributors      : Darko Poljak, Oliver Mueller, Andrej Walilko
-# date              : Dec 27 2024
-# version           : 0.7.7
+# date              : May 28 2025
+# version           : 0.8.0
 # usage             : blcheck [options] <domain_or_ip>
 # reference         : http://multirbl.valli.org/list/
 # code style        : https://google.github.io/styleguide/shell.xml
