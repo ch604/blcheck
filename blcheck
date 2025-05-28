@@ -515,32 +515,35 @@
 
     # Show help
     showHelp() {
-        cat <<HELP
-blcheck [options] <domain_or_IP>
+        cat <<-HELP
+		blcheck [options] <domain_or_IP>
 
-Supplied domain must be full qualified domain name.
-If the IP is supplied, the PTR check cannot be executed and will be skipped.
+		Supplied domain must be full qualified domain name.
+		If the IP is supplied, the PTR check cannot be executed and will be skipped.
 
--d dnshost  Use host as DNS server to make lookups
--l file     Load blocklists from file, separated by space or new line
--c          Warn if the top level domain of the blocklist has expired
--v          Verbose mode, can be used multiple times (up to -vvv)
--q          Quiet mode with absolutely no output (useful for scripts)
--p          Plain text output (no coloring, no interactive status, useful
-	    for tee'd output to a text file)
--h          The help you are just reading
+		-d dnshost  Use host as DNS server to make lookups
+		-l file     Load blocklists from file, separated by space or new line
+		-c          Warn if the top level domain of the blocklist has expired
+		-v          Verbose mode, can be used multiple times (up to -vvv)
+		-q          Quiet mode with absolutely no output (useful for scripts)
+		-p          Plain text output (no coloring, no interactive status, useful
+			    for tee'd output to a text file)
+		-j num	    The number of parallel processes to use (default is 200%, or
+			    2x system core count. See \`man parallel\` for details.)
+		-h          The help you are just reading
 
-Exit code of the script is the number of blocklisted entries. So if the supplied
-IP is not blocklisted on any of the servers the exit code is 0.
+		Exit code of the script is the number of blocklisted entries. So if the supplied
+		IP is not blocklisted on any of the servers the exit code is 0. If there are five
+		blocklist hits, then the exit code is 5.
 
-HELP
+	HELP
         exit;
     }
 
 #~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ }
 
 # Parse the params
-while getopts :vqphcl:d: arg; do
+while getopts :vqphcj:l:d: arg; do
     case "${arg}" in
         d) DNSSERVER="${OPTARG}";;
         l) loadBlocklists "${OPTARG}";;
@@ -549,6 +552,7 @@ while getopts :vqphcl:d: arg; do
         q) VERBOSE=-1;;
         p) PLAIN=1 RED="" GREEN="" YELLOW="" CLEAR="" ;;
         h) showHelp;;
+	j) j="${OPTARG}";;
         ?) error "Unknown option ${OPTARG}";;
     esac
 done
