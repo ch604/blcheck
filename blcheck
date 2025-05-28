@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2317
 
 # =============================================================================
 #
@@ -381,6 +382,7 @@
         # reputation/scoring pages
         # score.senderscore.com
 
+    # shellcheck disable=SC2034
     CONF_BLOCKLISTS_TEST="
         rbl.rbldns.ru
         rbl.rbldns.ru=127\.0\.0\.1
@@ -443,8 +445,9 @@
     progress() {
 
         # Bar
-        local x=$(($1 % ${#SPINNER} + 1))
-        local BAR=$(echo ${SPINNER} | awk "{ print substr(\$0, ${x}, 1) }")
+	local x BAR
+        x=$(($1 % ${#SPINNER} + 1))
+        BAR=$(awk "{ print substr(\$0, ${x}, 1) }" <<< "${SPINNER}")
         if [[ -z "${PLAIN}" ]]; then
             printf "\r ";
         fi
@@ -457,7 +460,8 @@
     resolve() {
 
         # IP already?
-        local IP=$(echo "$1" | grep "^${REGEX_IP}$")
+        local IP
+	IP=$(grep -E "^${REGEX_IP}$" <<< "$1")
         if [[ "${IP}" ]]; then
             echo "${IP}"
 
@@ -471,8 +475,8 @@
             esac
 
             case "${CMD}" in
-                ${CMD_DIG} ) "${CMD}" ${DNSSERVER} +short -t "${TYPE}" +time=${CONF_DNS_DURATION} +tries=${CONF_DNS_TRIES} "$1" | grep -om 1 "${REGEX}";;
-                ${CMD_HOST} ) "${CMD}" -t "${TYPE}" -W ${CONF_DNS_DURATION} -R ${CONF_DNS_TRIES} "$1" ${DNSSERVER} | tail -n1 | grep -om 1 "${REGEX}";;
+                "${CMD_DIG}" ) "${CMD}" "${DNSSERVER}" +short -t "${TYPE}" +time=${CONF_DNS_DURATION} +tries=${CONF_DNS_TRIES} "$1" | grep -Eom 1 "${REGEX}";;
+                "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W ${CONF_DNS_DURATION} -R ${CONF_DNS_TRIES} "$1" "${DNSSERVER}" | tail -n1 | grep -Eom 1 "${REGEX}";;
             esac
         fi
     }
@@ -480,7 +484,8 @@
     # Result info for IP
     text() {
         # IP already?
-        local IP=$(echo "$1" | grep "^${REGEX_IP}$")
+        local IP
+	IP=$(grep -E "^${REGEX_IP}$" <<< "$1")
         if [[ -n "${IP}" ]]; then
             echo "${IP}"
 
@@ -489,8 +494,8 @@
 
             local TYPE="txt"
             case "${CMD}" in
-                ${CMD_DIG} ) "${CMD}" ${DNSSERVER} +short -t "${TYPE}" +time=${CONF_DNS_DURATION} +tries=${CONF_DNS_TRIES} "$1" ;;
-                ${CMD_HOST} ) "${CMD}" -t "${TYPE}" -W ${CONF_DNS_DURATION} -R ${CONF_DNS_TRIES} "$1" ${DNSSERVER} | tail -n1 ;;
+                "${CMD_DIG}" ) "${CMD}" "${DNSSERVER}" +short -t "${TYPE}" +time="${CONF_DNS_DURATION}" +tries="${CONF_DNS_TRIES}" "$1" ;;
+                "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W "${CONF_DNS_DURATION}" -R "${CONF_DNS_TRIES}" "$1" "${DNSSERVER}" | tail -n1 ;;
             esac
         fi
     }
@@ -556,19 +561,19 @@ if [[ $# -eq 0 ]]; then
 fi
 TARGET=$1
 
-if [ ! $(which parallel 2> /dev/null) ]; then
+if ! which parallel &> /dev/null; then
 	echo "Parallel missing, trying to install..."
-	if [ $(which yum 2> /dev/null) ]; then
-		[ ! "$(yum -q provides parallel)" ] && yum -y -q install epel-release
-		yum -y -q install parallel
-	elif [ $(which dnf 2> /dev/null) ]; then
-		[ ! "$(dnf -q provides parallel)" ] && dnf -y -q install epel-release
-		dnf -y -q install parallel
+	if which yum &> /dev/null; then
+		[ ! "$(yum -q provides parallel)" ] && yum -y -q --skip-broken install epel-release
+		yum -y -q --skip-broken install parallel
+	elif which dnf &> /dev/null; then
+		[ ! "$(dnf -q provides parallel)" ] && dnf -y -q --skip-broken install epel-release
+		dnf -y -q --skip-broken install parallel
 	else #assumed debian-like
 		apt-get -qq update
 		apt-get -y -q install parallel
 	fi
-	if [ "$(which parallel 2> /dev/null)" ]; then
+	if which parallel &> /dev/null; then
 		mkdir ~/.parallel
 		touch ~/.parallel/will-cite
 	else
@@ -618,8 +623,8 @@ info 3 "Using ${REVERSED} for reversed IP"
 # Get the PTR
 info 3 "Checking the PTR record"
 case "${CMD}" in
-    ${CMD_DIG} ) PTR=$("${CMD}" ${DNSSERVER} +short -x "${IP}" | sed s/\.$//);;
-    ${CMD_HOST} ) PTR=$("${CMD}" "${IP}" ${DNSSERVER} | tail -n1 | grep -o '[^ ]\+$' | sed s/\.$//)
+    "${CMD_DIG}" ) PTR=$("${CMD}" "${DNSSERVER}" +short -x "${IP}" | sed s/\.$//);;
+    "${CMD_HOST}" ) PTR=$("${CMD}" "${IP}" "${DNSSERVER}" | tail -n1 | grep -o '[^ ]\+$' | sed s/\.$//)
 esac
 
 # Validate PTR
@@ -661,7 +666,8 @@ for BL in ${CONF_BLOCKLISTS}; do
             fi
 
             # Make sure the domain is a proper one
-            TMP=$(echo "${DOMAIN}" | sed -e 's/^[ \t]*//' | grep ^"${REGEX_DOMAIN}"$)
+            # shellcheck disable=SC2001
+            TMP=$(sed -e 's/^[ \t]*//' <<< "${DOMAIN}" | grep -E ^"${REGEX_DOMAIN}"$)
             if [[ -z "${TMP}" ]]; then
                info 0 "${YELLOW}Warning: domain '${DOMAIN}' is not valid and will be ignored${CLEAR}"
 
@@ -678,7 +684,7 @@ for BL in ${CONF_BLOCKLISTS}; do
 
                 # It is a proper blocklist
                 if [[ "${BLOCKLISTS}" ]]; then
-                    BLOCKLISTS=$(echo "${BLOCKLISTS}\n${DOMAIN}=${FILTER}#${TYPE}")
+                    BLOCKLISTS=$(echo -e "${BLOCKLISTS}\n${DOMAIN}=${FILTER}#${TYPE}")
                 else
                     BLOCKLISTS="${DOMAIN}=${FILTER}#${TYPE}"
                 fi
@@ -736,8 +742,8 @@ parallel_check() {
     if [[ "${VERBOSE}" -ge 1 ]]; then
 
         # Show percentage
-        local STATUS=$(printf " %3s" $((I * 100 / COUNT)))
-        STATUS="${STATUS}% "
+        local STATUS
+	STATUS="$(printf " %3s" $((I * 100 / COUNT)))% "
 
         # Show additional info
         if [[ "${VERBOSE}" -ge 3 ]]; then
@@ -758,7 +764,8 @@ parallel_check() {
     fi
 
     # Get the status
-    local RESPONSE=$(resolve "${TEST}")
+    local RESPONSE
+    RESPONSE=$(resolve "${TEST}")
 
     # Not blocklisted
     if [[ -z "${RESPONSE}" ]]; then
@@ -766,11 +773,12 @@ parallel_check() {
         # Make sure the server is viable
         local ERROR=""
         if [[ "${VERIFY_BL}" ]]; then
-            local TDL=$(echo "${DOMAIN}" | grep -om 1 '\([a-zA-Z0-9]\+\(-[a-zA-Z0-9]\+\)*\.\)[a-zA-Z]\{2,\}$')
+            local TDL
+	    TDL=$(grep -Eom 1 "${REGEX_TDL}" <<< "${DOMAIN}")
             if [[ ! "$(resolve "${TDL}" ns)" ]]; then
                 if [[ -z "${PLAIN}" ]]; then printf "\r"; fi
                 printf "%s%sUnreachable server%s\n" "${YELLOW}" "${PREFIX}" "${CLEAR}";
-                echo "$BL" | cut -d= -f1 >> $invalid_file
+                echo "$BL" | cut -d= -f1 >> "$invalid_file"
                 ERROR=TRUE
             fi
         fi
@@ -780,40 +788,40 @@ parallel_check() {
                 if [[ -z "${PLAIN}" ]]; then printf "\r"; fi
                 printf "%s%s✓%s\n" "${CLEAR}" "${PREFIX}" "${CLEAR}";
             fi
-            echo "$BL" | cut -d= -f1 >> $passed_file
+            cut -d= -f1 <<< "$BL" >> "$passed_file"
         fi;
 
     # Invalid response
     elif [[ ! "${RESPONSE}" =~ ${FILTER} ]] || [[ ${RESPONSE:0:8} == "127.255." ]]; then
         if [[ "${VERBOSE}" -ge 1 ]]; then
-            if [[ -z "${PLAIN}" ]]; then printf "\r"; fi
+            [[ -z "${PLAIN}" ]] && printf "\r"
             printf "%s%sinvalid response (%s)%s\n" "${YELLOW}" "${PREFIX}" "${RESPONSE}" "${CLEAR}";
             printf "%s%${#PREFIX}s%s%s\n" "${YELLOW}" "TXT: " "$(text "${TEST}")" "${CLEAR}";
         fi;
-        echo "$BL" | cut -d= -f1 >> $invalid_file
+        cut -d= -f1 <<< "$BL" >> "$invalid_file"
 
     # matched
     else
         if [[ "${TYPE}" != "DNSWL" ]]; then
             if [[ "${VERBOSE}" -ge 1 ]]; then
-                if [[ -z "${PLAIN}" ]]; then printf "\r"; fi
+                [[ -z "${PLAIN}" ]] && printf "\r"
                 printf "%s%sblocklisted (%s)%s\n" "${RED}" "${PREFIX}" "${RESPONSE}" "${CLEAR}";
                 printf "%s%${#PREFIX}s%s%s\n" "${RED}" "TXT: " "$(text "${TEST}")" "${CLEAR}";
             elif [[ "${VERBOSE}" -ge 0 ]]; then
-                if [[ -z "${PLAIN}" ]]; then printf "\r                                                          "; printf "\r"; fi
+                [[ -z "${PLAIN}" ]] && printf "\r%60s\r" " "
                 printf "%s%s%s : %s\n" "${RED}" "${DOMAIN}" "${CLEAR}" "${RESPONSE}"
             fi
-            echo "$BL" | cut -d= -f1 >> $failed_file
+            cut -d= -f1 <<< "$BL" >> "$failed_file"
         else
             if [[ "${VERBOSE}" -ge 1 ]]; then
-                if [[ -z "${PLAIN}" ]]; then printf "\r"; fi
+                [[ -z "${PLAIN}" ]] && printf "\r"
                 printf "%s%sallowlisted (%s)%s\n" "${GREEN}" "${PREFIX}" "${RESPONSE}" "${CLEAR}";
                 printf "%s%${#PREFIX}s%s%s\n" "${GREEN}" "TXT: " "$(text "${TEST}")" "${CLEAR}";
             elif [[ "${VERBOSE}" -ge 0 ]]; then
-                if [[ -z "${PLAIN}" ]]; then printf "\r                                                          "; printf "\r"; fi
+                [[ -z "${PLAIN}" ]] && printf "\r%60s\r" " "
                 printf "%s%s%s : %s\n" "${GREEN}" "${DOMAIN}" "${CLEAR}" "${RESPONSE}"
             fi
-             echo "$BL" | cut -d= -f1 >> $allow_file
+            cut -d= -f1 <<< "$BL" >> "$allow_file"
         fi
     fi
 }
@@ -823,10 +831,12 @@ failed_file=$(mktemp)
 passed_file=$(mktemp)
 invalid_file=$(mktemp)
 export -f parallel_check resolve text progress
-export REGEX_LIST REVERSED TARGET VERIFY_BL VERBOSE PLAIN COUNT YELLOW CLEAR RED GREEN SPINNER REGEX_IP REGEX_DOMAIN CMD_DIG DNSSERVER CONF_DNS_DURATION CONF_DNS_TRIES REGEX CMD_HOST CMD allow_file failed_file passed_file invalid_file
-parallel -j $j 'parallel_check {#} {}' ::: ${BLOCKLISTS}
+export REGEX_LIST REGEX_TDL REVERSED TARGET VERIFY_BL VERBOSE PLAIN COUNT YELLOW CLEAR RED GREEN SPINNER REGEX_IP REGEX_DOMAIN CMD_DIG DNSSERVER CONF_DNS_DURATION CONF_DNS_TRIES REGEX CMD_HOST CMD allow_file failed_file passed_file invalid_file
+# shellcheck disable=SC2086
+parallel -j "$j" 'parallel_check {#} {}' ::: ${BLOCKLISTS}
 
 # Print results
+# shellcheck disable=SC2002
 if [[ "${VERBOSE}" -ge 0 ]]; then
     if [[ -z "${PLAIN}" ]]; then
         printf "\r                                                    \n"
@@ -837,23 +847,24 @@ if [[ "${VERBOSE}" -ge 0 ]]; then
     echo Results for "${TARGET}"
     echo
     printf "%-15s" "Tested:";   echo "${COUNT}"
-    printf "%-15s" "Passed:";   echo "${GREEN}$(cat $passed_file | wc -l)${CLEAR}"
-    printf "%-15s" "Whitelisted:";  echo "${GREEN}$(cat $allow_file | wc -l)${CLEAR}"
-    printf "%-15s" "Invalid:";  echo "${YELLOW}$(cat $invalid_file | wc -l)${CLEAR}"
-    printf "%-15s" "Blocklisted:";  echo "${RED}$(cat $failed_file | wc -l)${CLEAR}"
+    printf "%-15s" "Passed:";   echo "${GREEN}$(cat "$passed_file" | wc -l)${CLEAR}"
+    printf "%-15s" "Whitelisted:";  echo "${GREEN}$(cat "$allow_file" | wc -l)${CLEAR}"
+    printf "%-15s" "Invalid:";  echo "${YELLOW}$(cat "$invalid_file" | wc -l)${CLEAR}"
+    printf "%-15s" "Blocklisted:";  echo "${RED}$(cat "$failed_file" | wc -l)${CLEAR}"
     echo "----------------------------------------------------------"
 fi
 
-failed=$(cat $failed_file | wc -l)
-if [ $failed -gt 0 ]; then
+# shellcheck disable=SC2002
+failed=$(cat "$failed_file" | wc -l)
+if [ "$failed" -gt 0 ]; then
 	touch $output
-	echo ${TARGET} >> $output
-	cat $failed_file >> $output
+	echo "${TARGET}" >> $output
+	cat "$failed_file" >> $output
 fi
 
-rm -f $passed_file $allow_file $invalid_file $failed_file
+rm -f "$passed_file" "$allow_file" "$invalid_file" "$failed_file"
 
 unset -f parallel_check resolve text progress
-unset REGEX_LIST REVERSED TARGET VERIFY_BL VERBOSE PLAIN COUNT YELLOW CLEAR RED GREEN SPINNER REGEX_IP REGEX_DOMAIN CMD_DIG DNSSERVER CONF_DNS_DURATION CONF_DNS_TRIES REGEX CMD_HOST CMD allow_file failed_file passed_file invalid_file
+unset REGEX_LIST REGEX_TDL REVERSED TARGET VERIFY_BL VERBOSE PLAIN COUNT YELLOW CLEAR RED GREEN SPINNER REGEX_IP REGEX_DOMAIN CMD_DIG DNSSERVER CONF_DNS_DURATION CONF_DNS_TRIES REGEX CMD_HOST CMD allow_file failed_file passed_file invalid_file
 
 exit "${failed}"
