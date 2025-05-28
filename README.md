@@ -38,6 +38,8 @@ If the IP is supplied, the PTR check cannot be executed and will be skipped.
 -q          Quiet modem with absolutely no output (useful for scripts)
 -p          Plain text output (no coloring, no interactive status, useful
             for tee'd output to a text file)
+-j num	    The number of parallel processes to use (default is 200%, or
+	    2x system core count. See `man parallel` for details.)
 -h          The help you are just reading
 </pre>
 
