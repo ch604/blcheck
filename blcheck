@@ -474,6 +474,7 @@
                    * ) TYPE="a";  REGEX="${REGEX_IP}$";;
             esac
 
+        # shellcheck disable=SC2086
             case "${CMD}" in
                 "${CMD_DIG}" ) "${CMD}" ${DNSSERVER} +short -t "${TYPE}" +time=${CONF_DNS_DURATION} +tries=${CONF_DNS_TRIES} "$1" | grep -om 1 "${REGEX}";;
                 "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W ${CONF_DNS_DURATION} -R ${CONF_DNS_TRIES} "$1" ${DNSSERVER} | tail -n1 | grep -om 1 "${REGEX}";;
@@ -626,6 +627,7 @@ info 3 "Using ${REVERSED} for reversed IP"
 
 # Get the PTR
 info 3 "Checking the PTR record"
+# shellcheck disable=SC2086
 case "${CMD}" in
     "${CMD_DIG}" ) PTR=$("${CMD}" ${DNSSERVER} +short -x "${IP}" | sed s/\.$//);;
     "${CMD_HOST}" ) PTR=$("${CMD}" "${IP}" ${DNSSERVER} | tail -n1 | grep -o '[^ ]\+$' | sed s/\.$//)
