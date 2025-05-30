@@ -461,7 +461,7 @@
 
         # IP already?
         local IP
-	IP=$(grep -E "^${REGEX_IP}$" <<< "$1")
+	IP=$(grep "^${REGEX_IP}$" <<< "$1")
         if [[ "${IP}" ]]; then
             echo "${IP}"
 
@@ -475,8 +475,8 @@
             esac
 
             case "${CMD}" in
-                "${CMD_DIG}" ) "${CMD}" "${DNSSERVER}" +short -t "${TYPE}" +time=${CONF_DNS_DURATION} +tries=${CONF_DNS_TRIES} "$1" | grep -Eom 1 "${REGEX}";;
-                "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W ${CONF_DNS_DURATION} -R ${CONF_DNS_TRIES} "$1" "${DNSSERVER}" | tail -n1 | grep -Eom 1 "${REGEX}";;
+                "${CMD_DIG}" ) "${CMD}" "${DNSSERVER}" +short -t "${TYPE}" +time=${CONF_DNS_DURATION} +tries=${CONF_DNS_TRIES} "$1" | grep -om 1 "${REGEX}";;
+                "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W ${CONF_DNS_DURATION} -R ${CONF_DNS_TRIES} "$1" "${DNSSERVER}" | tail -n1 | grep -om 1 "${REGEX}";;
             esac
         fi
     }
@@ -485,7 +485,7 @@
     text() {
         # IP already?
         local IP
-	IP=$(grep -E "^${REGEX_IP}$" <<< "$1")
+	IP=$(grep "^${REGEX_IP}$" <<< "$1")
         if [[ -n "${IP}" ]]; then
             echo "${IP}"
 
@@ -671,7 +671,7 @@ for BL in ${CONF_BLOCKLISTS}; do
 
             # Make sure the domain is a proper one
             # shellcheck disable=SC2001
-            TMP=$(sed -e 's/^[ \t]*//' <<< "${DOMAIN}" | grep -E ^"${REGEX_DOMAIN}"$)
+            TMP=$(sed -e 's/^[ \t]*//' <<< "${DOMAIN}" | grep ^"${REGEX_DOMAIN}"$)
             if [[ -z "${TMP}" ]]; then
                info 0 "${YELLOW}Warning: domain '${DOMAIN}' is not valid and will be ignored${CLEAR}"
 
@@ -778,7 +778,7 @@ parallel_check() {
         local ERROR=""
         if [[ "${VERIFY_BL}" ]]; then
             local TDL
-	    TDL=$(grep -Eom 1 "${REGEX_TDL}" <<< "${DOMAIN}")
+	    TDL=$(grep -om 1 "${REGEX_TDL}" <<< "${DOMAIN}")
             if [[ ! "$(resolve "${TDL}" ns)" ]]; then
                 if [[ -z "${PLAIN}" ]]; then printf "\r"; fi
                 printf "%s%sUnreachable server%s\n" "${YELLOW}" "${PREFIX}" "${CLEAR}";
