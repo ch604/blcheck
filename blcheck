@@ -162,14 +162,6 @@
         singular.ttk.pte.hu
         blacklist.netcore.co.in
         dnsbl.rv-soft.info
-        nana.bl.techtheft.info
-        other.bl.techtheft.info
-        robot.bl.techtheft.info
-        scanning.bl.techtheft.info
-        source.bl.techtheft.info
-        support.bl.techtheft.info
-        virus.bl.techtheft.info
-        watchlist.bl.techtheft.info
         db.wpbl.info
         rbl.jp
         spamlist.or.kr
@@ -207,7 +199,6 @@
         rep.mailspike.net
         wl.mailspike.net#DNSWL
         z.mailspike.net
-        ix.dnsbl.manitu.net
         combined.rbl.msrbl.net
         images.rbl.msrbl.net
         phishing.rbl.msrbl.net
@@ -222,37 +213,6 @@
         bl.scientificspam.net
         rhsbl.scientificspam.net
         korea.services.net
-        dnsbl.sorbs.net
-        block.dnsbl.sorbs.net
-        exitnodes.tor.dnsbl.sectoor.dehttp.dnsbl.sorbs.net
-        dul.dnsbl.sorbs.net
-        escalations.dnsbl.sorbs.net
-        http.dnsbl.sorbs.net
-        misc.dnsbl.sorbs.net
-        new.dnsbl.sorbs.net
-        noservers.dnsbl.sorbs.net
-        old.dnsbl.sorbs.net
-        problems.dnsbl.sorbs.net
-        proxies.dnsbl.sorbs.net
-        recent.dnsbl.sorbs.net
-        relays.dnsbl.sorbs.net
-        safe.dnsbl.sorbs.net
-        smtp.dnsbl.sorbs.net
-        socks.dnsbl.sorbs.net
-        spam.dnsbl.sorbs.net
-        new.spam.dnsbl.sorbs.net
-        old.spam.dnsbl.sorbs.net
-        recent.spam.dnsbl.sorbs.net
-        web.dnsbl.sorbs.net
-        zombie.dnsbl.sorbs.net
-        aspews.ext.sorbs.net
-        l1.bbfh.ext.sorbs.net
-        l2.bbfh.ext.sorbs.net
-        l3.bbfh.ext.sorbs.net
-        l4.bbfh.ext.sorbs.net
-        rhsbl.sorbs.net
-        badconf.rhsbl.sorbs.net
-        nomail.rhsbl.sorbs.net
         bl.spamcop.net
         backscatter.spameatingmonkey.net
         bl.spameatingmonkey.net
@@ -280,11 +240,6 @@
         dnsbl-1.uceprotect.net
         dnsbl-2.uceprotect.net
         dnsbl-3.uceprotect.net
-        all.rbl.webiron.net
-        babl.rbl.webiron.net
-        cabl.rbl.webiron.net
-        crawler.rbl.webiron.net
-        stabl.rbl.webiron.net
         dnsbl.zapbl.net
         rhsbl.zapbl.net
         rbl.zenon.net
