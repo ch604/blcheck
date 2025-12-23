@@ -397,10 +397,11 @@
     }
 
     # Show progress
+    # shellcheck disable=SC2329
     progress() {
 
         # Bar
-	local x BAR
+    local x BAR
         x=$(($1 % ${#SPINNER} + 1))
         BAR=$(awk "{ print substr(\$0, ${x}, 1) }" <<< "${SPINNER}")
         if [[ -z "${PLAIN}" ]]; then
@@ -416,7 +417,7 @@
 
         # IP already?
         local IP
-	IP=$(grep "^${REGEX_IP}$" <<< "$1")
+        IP=$(grep "^${REGEX_IP}$" <<< "$1")
         if [[ "${IP}" ]]; then
             echo "${IP}"
 
@@ -438,10 +439,11 @@
     }
 
     # Result info for IP
+    # shellcheck disable=SC2329
     text() {
         # IP already?
         local IP
-	IP=$(grep "^${REGEX_IP}$" <<< "$1")
+        IP=$(grep "^${REGEX_IP}$" <<< "$1")
         if [[ -n "${IP}" ]]; then
             echo "${IP}"
 
@@ -483,9 +485,9 @@
 		-v          Verbose mode, can be used multiple times (up to -vvv)
 		-q          Quiet mode with absolutely no output (useful for scripts)
 		-p          Plain text output (no coloring, no interactive status, useful
-			    for tee'd output to a text file)
-		-j num	    The number of parallel processes to use (default is 200%, or
-			    2x system core count. See \`man parallel\` for details.)
+		            for tee'd output to a text file)
+		-j num      The number of parallel processes to use (default is 200%, or
+		            2x system core count. See \`man parallel\` for details.)
 		-h          The help you are just reading
 
 		Exit code of the script is the number of blocklisted entries. So if the supplied
@@ -508,7 +510,7 @@ while getopts :vqphcj:l:d: arg; do
         q) VERBOSE=-1;;
         p) PLAIN=1 RED="" GREEN="" YELLOW="" CLEAR="" ;;
         h) showHelp;;
-	j) j="${OPTARG}";;
+        j) j="${OPTARG}";;
         ?) error "Unknown option ${OPTARG}";;
     esac
 done
@@ -522,23 +524,23 @@ fi
 TARGET=$1
 
 if ! which parallel &> /dev/null; then
-	echo "Parallel missing, trying to install..."
-	if which yum &> /dev/null; then
-		[ ! "$(yum -q provides parallel)" ] && yum -y -q --skip-broken install epel-release
-		yum -y -q --skip-broken install parallel
-	elif which dnf &> /dev/null; then
-		[ ! "$(dnf -q provides parallel)" ] && dnf -y -q --skip-broken install epel-release
-		dnf -y -q --skip-broken install parallel
-	else #assumed debian-like
-		apt-get -qq update
-		apt-get -y -q install parallel
-	fi
-	if which parallel &> /dev/null; then
-		mkdir ~/.parallel
-		touch ~/.parallel/will-cite
-	else
-		error "Failed to install parallel, exiting."
-	fi
+    echo "Parallel missing, trying to install..."
+    if which yum &> /dev/null; then
+        [ ! "$(yum -q provides parallel)" ] && yum -y -q --skip-broken install epel-release
+        yum -y -q --skip-broken install parallel
+    elif which dnf &> /dev/null; then
+        [ ! "$(dnf -q provides parallel)" ] && dnf -y -q --skip-broken install epel-release
+        dnf -y -q --skip-broken install parallel
+    else #assumed debian-like
+        apt-get -qq update
+        apt-get -y -q install parallel
+    fi
+    if which parallel &> /dev/null; then
+        mkdir ~/.parallel
+        touch ~/.parallel/will-cite
+    else
+        error "Failed to install parallel, exiting."
+    fi
 fi
 
 # Some shells disable parsing backslash in echo statements by default
@@ -668,6 +670,7 @@ info 1 "  - ${COUNT_URIBL} URI blocklists"
 
 # Iterate over all blocklists
 
+# shellcheck disable=SC2329
 parallel_check() {
     local PREFIX=
     local I=$1
@@ -704,7 +707,7 @@ parallel_check() {
 
         # Show percentage
         local STATUS
-	STATUS="$(printf " %3s" $((I * 100 / COUNT)))% "
+        STATUS="$(printf " %3s" $((I * 100 / COUNT)))% "
 
         # Show additional info
         if [[ "${VERBOSE}" -ge 3 ]]; then
@@ -735,7 +738,7 @@ parallel_check() {
         local ERROR=""
         if [[ "${VERIFY_BL}" ]]; then
             local TDL
-	    TDL=$(grep -om 1 "${REGEX_TDL}" <<< "${DOMAIN}")
+            TDL=$(grep -om 1 "${REGEX_TDL}" <<< "${DOMAIN}")
             if [[ ! "$(resolve "${TDL}" ns)" ]]; then
                 if [[ -z "${PLAIN}" ]]; then printf "\r"; fi
                 printf "%s%sUnreachable server%s\n" "${YELLOW}" "${PREFIX}" "${CLEAR}";
@@ -818,9 +821,9 @@ fi
 # shellcheck disable=SC2002
 failed=$(cat "$failed_file" | wc -l)
 if [ "$failed" -gt 0 ]; then
-	touch $output
-	echo "${TARGET}" >> $output
-	cat "$failed_file" >> $output
+    touch $output
+    echo "${TARGET}" >> $output
+    cat "$failed_file" >> $output
 fi
 
 rm -f "$passed_file" "$allow_file" "$invalid_file" "$failed_file"
