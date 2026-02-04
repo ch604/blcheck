@@ -4,11 +4,11 @@
 # =============================================================================
 #
 # title             : blcheck
-# description       : Test any domain against more than 100 blocklists.
+# description       : Test any domain against more than 200 blocklists.
 # author            : Intellex
 # contributors      : Darko Poljak, Oliver Mueller, Andrej Walilko
-# date              : May 28 2025
-# version           : 0.8.0
+# date              : Feb 04 2026
+# version           : 0.8.1
 # usage             : blcheck [options] <domain_or_ip>
 # reference         : http://multirbl.valli.org/list/
 # code style        : https://google.github.io/styleguide/shell.xml
@@ -474,13 +474,15 @@
     # Show help
     showHelp() {
         cat <<-HELP
+		Test any domain against more than 200 blocklists.
 		blcheck [options] <domain_or_IP>
 
 		Supplied domain must be full qualified domain name.
 		If the IP is supplied, the PTR check cannot be executed and will be skipped.
 
 		-d dnshost  Use host as DNS server to make lookups
-		-l file     Load blocklists from file, separated by space or new line
+		-l filename Load blocklists from filename, separated by space or new line
+		-o filename Write results to filename instead of ~/blcheck_blocklists.txt
 		-c          Warn if the top level domain of the blocklist has expired
 		-v          Verbose mode, can be used multiple times (up to -vvv)
 		-q          Quiet mode with absolutely no output (useful for scripts)
@@ -501,7 +503,7 @@
 #~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ }
 
 # Parse the params
-while getopts :vqphcj:l:d: arg; do
+while getopts :vqphcj:l:d:o: arg; do
     case "${arg}" in
         d) DNSSERVER="${OPTARG}";;
         l) loadBlocklists "${OPTARG}";;
@@ -510,6 +512,7 @@ while getopts :vqphcj:l:d: arg; do
         q) VERBOSE=-1;;
         p) PLAIN=1 RED="" GREEN="" YELLOW="" CLEAR="" ;;
         h) showHelp;;
+        o) output="${OPTARG}";;
         j) j="${OPTARG}";;
         ?) error "Unknown option ${OPTARG}";;
     esac
