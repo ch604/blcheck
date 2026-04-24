@@ -51,17 +51,14 @@
         t3direct.dnsbl.net.au
         ucepn.dnsbl.net.au
         wpbl.dnsbl.net.au
-        bl.reynolds.net.au
         bl.mav.com.br
         openproxy.bls.digibase.ca
         proxyabuse.bls.digibase.ca
         spambot.bls.digibase.ca
-        probes.dnsbl.net.auproxy.bl.gweep.ca
         rbl2.triumf.ca
         wbl.triumf.ca#DNSWL
         spamrbl.imp.ch
         wormrbl.imp.ch
-        rbl.lugh.ch
         dnsrbl.swinog.ch
         uribl.swinog.ch#URIBL
         blacklist.woody.ch
@@ -72,11 +69,13 @@
         rbl.blockedservers.com
         netscan.rbl.blockedservers.com
         spam.rbl.blockedservers.com
-        list.blogspambl.com
         dnsbl1.dnsbl.borderware.com
         dnsbl2.dnsbl.borderware.com
         dnsbl3.dnsbl.borderware.com
         dul.dnsbl.borderware.com
+        black.dnsbl.brukalai.lt
+        light.dnsbl.brukalai.lt
+        white.dnsbl.brukalai.lt#DNSWL
         csi.cloudmark.com
         dnsbl.cobion.com
         bogons.cymru.com
@@ -103,85 +102,76 @@
         q.mail-abuse.com
         r.mail-abuse.com
         cidr.bl.mcafee.com
+        rbl.metunet.com
         dnsbl.forefront.microsoft.com
         bl.mipspace.com
         bl.nordspam.com
         dbl.nordspam.com#URIBL
         safe.dnsbl.prs.proofpoint.com
-        rbl.realtimeblacklist.com
         mailsl.dnsbl.rjek.com
         urlsl.dnsbl.rjek.com
-        dynip.rothen.com
         bl-domain.rbl.scrolloutf1.com#URIBL
         bl-ip.rbl.scrolloutf1.com
         wl-ip.rbl.scrolloutf1.com#DNSWL
-        bl.score.senderscore.com
+        bl.score.senderscore.com=127\.0\.0\.[0-9]+
         all.spamrats.com
         rbl.suresupport.com
         psbl.surriel.com
-        whitelist.surriel.com#DNSWL
         bl.tiopan.com
         dbl.tiopan.com#URIBL
         ubl.unsubscore.com
         spam.dnsbl.anonmails.de
         bl.blocklist.de
-        dnsbl.darklist.de
-        dnsbl.inps.de
-        dnswl.inps.de#DNSWL
         admin.bl.kundenserver.de
         relays.bl.kundenserver.de
         schizo-bl.kundenserver.de
         spamblock.kundenserver.de
         worms-bl.kundenserver.de
-        dnsbl.madavi.de
-        torserver.tor.dnsbl.sectoor.de
         dunk.dnsbl.tuxad.de
         hartkore.dnsbl.tuxad.de
         spamsources.fabel.dk
         st.technovision.dk
-        dnsbl.abyan.es
         eswlrev.dnsbl.rediris.es#DNSWL
         mtawlrev.dnsbl.rediris.es#DNSWL
+        uribl.rspamd.com#URIBL
         dnsbl.isx.fr
         all.spam-rbl.fr
         pofon.foobar.hu
-        ispmx.pofon.foobar.hu
+        ispmx.pofon.foobar.hu#DNSWL
         uribl.pofon.foobar.hu#URIBL
         singular.ttk.pte.hu
         blacklist.netcore.co.in
         dnsbl.rv-soft.info
-        db.wpbl.info
         rbl.jp
-        spamlist.or.kr
         bl.fmb.la
-        communicado.fmb.la
-        nsbl.fmb.la
-        sa.fmb.la
-        short.fmb.la
-        dnsbl.anticaptcha.net
-        dnsbl6.anticaptcha.net
+        communicado.fmb.la#URIBL
+        nsbl.fmb.la#URIBL
+        short.fmb.la#URIBL
         blacklist.mail.ops.asp.att.net
         blacklist.sequoia.ops.asp.att.net
         blacklist.mailrelay.att.net
         rbl.blakjak.net
         dul.blackhole.cantv.net
         hog.blackhole.cantv.net
-        rhsbl.blackhole.cantv.net#URIBL
+        rhsbl.blackhole.cantv.net
         rot.blackhole.cantv.net
         spam.blackhole.cantv.net
         rbl.choon.net
-        ipv6.rbl.choon.net
         rwl.choon.net#DNSWL
+        ipv6.rbl.choon.net
         ipv6.rwl.choon.net#DNSWL
         dnsbl.cyberlogic.net
         fnrbl.fast.net
         truncate.gbudb.net
         rbl.interserver.net
         rbl.iprange.net
+        rbl.ircbl.org
         dnsbl.kempt.net
         spamguard.leadmon.net
+        iprbl.mailcleaner.net
         niprbl.mailcleaner.net
         uribl.mailcleaner.net#URIBL
+        nuribl.mailcleaner.net#URIBL
         dnsbl.mailshell.net
         bl.mailspike.net
         wl.mailspike.net#DNSWL
@@ -191,7 +181,6 @@
         relays.nether.net
         trusted.nether.net#DNSWL
         unsure.nether.net
-        dul.pacifier.net
         all.s5h.net
         bl.scientificspam.net
         rhsbl.scientificspam.net#URIBL
@@ -216,8 +205,6 @@
         dbl.suomispam.net#URIBL
         gl.suomispam.net
         dob.sibl.support-intelligence.net
-        srn.surgate.net
-        srnblack.surgate.net
         rbl.tdk.net
         dnsbl-0.uceprotect.net
         dnsbl-1.uceprotect.net
@@ -227,32 +214,24 @@
         rhsbl.zapbl.net#URIBL
         rbl.zenon.net
         dnsbl.beetjevreemd.nl
-        bitonly.dnsbl.bit.nl
-        virbl.bit.nl
         blacklist.sci.kun.nl
         whitelist.sci.kun.nl#DNSWL
-        blackholes.tepucom.nl
         bl.konstant.no
         bl.0spam.org
         wl.0spam.org#DNSWL
         nbl.0spam.org
-        orvedb.aupads.org
-        rsbl.aupads.org
         ips.backscatterer.org
         b.barracudacentral.org
-        bb.barracudacentral.org
         list.bbfh.org
-        plus.bondedsender.org
-        query.bondedsender.org
+        plus.bondedsender.org=127\.0\.0\.10#DNSWL
+        query.bondedsender.org=127\.0\.0\.10#DNSWL
         dnsblchile.org
-        dwl.dnswl.org#DNSWL
         list.dnswl.org#DNSWL
         bl.drmx.org
         dnsbl.dronebl.org
         rbl.efnet.org
         tor.efnet.org
         rbl.efnetrbl.org
-        dnsbl.rangers.eu.org
         dnsbl.httpbl.org
         mail-abuse.blacklist.jippg.org
         dnsbl.justspam.org
@@ -260,22 +239,10 @@
         bl.worst.nosolicitado.org
         spam.pedantic.org
         access.redhawk.org
-        abuse.rfc-clueless.org
-        bogusmx.rfc-clueless.org
-        dsn.rfc-clueless.org
-        elitist.rfc-clueless.org
-        fulldom.rfc-clueless.org
-        postmaster.rfc-clueless.org
-        whois.rfc-clueless.org
         public.sarbl.org
         rbl.schulte.org
         dbl.spamhaus.org#URIBL
-        vouch.dwl.spamhaus.org#DNSWL
-        pbl.spamhaus.org
-        sbl.spamhaus.org
-        sbl-xbl.spamhaus.org
         swl.spamhaus.org#DNSWL
-        xbl.spamhaus.org
         zen.spamhaus.org
         multi.surbl.org
         dnsbl.tornevall.org
@@ -285,12 +252,14 @@
         ips.whitelisted.org#DNSWL
         dnsbl.calivent.com.pe
         forbidden.icm.edu.pl
-        dyn.rbl.polspam.pl
-        lblip4.rbl.polspam.pl
-        lblip6.rbl.polspam.pl
-        rblip4.rbl.polspam.pl
-        rblip6.rbl.polspam.pl
+        bl.rbl.polspam.pl
+        bl6.rbl.polspam.pl
+        lblip4.rbl.polspam.pl=37\.187\.99\.216
+        rblip4.rbl.polspam.pl=37\.187\.99\.216
         rhsbl.rbl.polspam.pl#URIBL
+        rhsbl.rbl.polspam.pl=37\.187\.99\.216#URIBL
+        ip4.white.polspam.pl=127\.127\.127\.4#DNSWL
+        ip6.white.polspam.pl=127\.127\.127\.6#DNSWL
         rbl.abuse.ro
         uribl.abuse.ro#URIBL
         vote.drbl.caravan.ru
@@ -306,20 +275,19 @@
         dnsbl.net.ua
         rbl.fasthosts.co.uk
         torexit.dan.me.uk
-        bsb.empty.us
         88.blocklist.zap
-        dnsbl.sorbs.net
-        spam.dnsbl.sorbs.net
-        rhsbl.sorbs.net#URIBL
-        nomail.rhsbl.sorbs.net#URIBL
-        badconf.rhsbl.xorbs.net#URIBL
-        ubl.lashback.com
         bl.nszones.com
-        ubl.nszones.com#URIBL"
-
-
-        # reputation/scoring pages
-        # score.senderscore.com
+        ubl.nszones.com#URIBL
+        bl.octopusdns.com
+        wild.pccc.com=127\.0\.[01]\.[1246]#URIBL
+        bl.pcready.me
+        ip.dnsbl.risk.oxl.app
+        multi.uribl.com#URIBL
+        bad.virusfree.cz
+        bip.virusfree.cz
+        d.bl.zenrbl.pl#URIBL
+        ip4.bl.zenrbl.pl
+        rbl.rbldns.ru"
 
     CONF_QUICKLISTS="
         rbl2.triumf.ca
@@ -333,7 +301,7 @@
         cidr.bl.mcafee.com
         dnsbl.forefront.microsoft.com
         bl.nordspam.com
-        bl.score.senderscore.com
+        bl.score.senderscore.com=127\.0\.0\.[0-9]+
         all.spamrats.com
         spam.dnsbl.anonmails.de
         bl.blocklist.de
@@ -371,7 +339,6 @@
         b.barracudacentral.org
         bl.drmx.org
         dnsbl.dronebl.org
-        dnsbl.rangers.eu.org
         mail-abuse.blacklist.jippg.org
         bl.nosolicitado.org
         bl.worst.nosolicitado.org
@@ -381,9 +348,7 @@
         dnsbl.calivent.com.pe
         forbidden.icm.edu.pl
         torexit.dan.me.uk
-        88.blocklist.zap
-        dnsbl.sorbs.net
-        ubl.lashback.com"
+        88.blocklist.zap"
 
     # shellcheck disable=SC2034
     CONF_BLOCKLISTS_TEST="
