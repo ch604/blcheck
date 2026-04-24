@@ -117,7 +117,6 @@
         mailsl.dnsbl.rjek.com
         urlsl.dnsbl.rjek.com
         dynip.rothen.com
-        blackholes.scconsult.com
         reputation-domain.rbl.scrolloutf1.com
         reputation-ip.rbl.scrolloutf1.com
         reputation-ns.rbl.scrolloutf1.com
@@ -263,7 +262,6 @@
         plus.bondedsender.org
         query.bondedsender.org
         dnsblchile.org
-        dnsrbl.org
         dwl.dnswl.org#DNSWL
         list.dnswl.org#DNSWL
         bl.drmx.org
@@ -278,7 +276,6 @@
         bl.mailspike.org
         bl.nosolicitado.org
         bl.worst.nosolicitado.org
-        dnsbl.openresolvers.org
         spam.pedantic.org
         access.redhawk.org
         abuse.rfc-clueless.org
@@ -290,23 +287,16 @@
         whois.rfc-clueless.org
         public.sarbl.org
         rbl.schulte.org
-        sbl.spamdown.org
         dbl.spamhaus.org#URIBL
-        _vouch.dwl.spamhaus.org#DNSWL
+        vouch.dwl.spamhaus.org#DNSWL
         pbl.spamhaus.org
         sbl.spamhaus.org
         sbl-xbl.spamhaus.org
         swl.spamhaus.org#DNSWL
         xbl.spamhaus.org
         zen.spamhaus.org
-        abuse.surbl.org
-        abuse.surbl.org#URIBL
-        cr.surbl.org
-        ct.surbl.org
         multi.surbl.org
         multi.surbl.org#URIBL
-        mw.surbl.org
-        ph.surbl.org
         dnsbl.tornevall.org
         opm.tornevall.org
         free.v4bl.org
@@ -330,7 +320,7 @@
         bl.shlink.orgdul.ru
         dnsbl.rymsho.ru
         rhsbl.rymsho.ru#URIBL
-        netblockbl.spamgrouper.to
+        singlebl.spamgrouper.to
         dnsbl.mcu.edu.tw
         dnsbl.net.ua
         rbl.fasthosts.co.uk
@@ -443,8 +433,8 @@
 
         # shellcheck disable=SC2086
             case "${CMD}" in
-                "${CMD_DIG}" ) "${CMD}" ${DNSSERVER} +short -t "${TYPE}" +time=${CONF_DNS_DURATION} +tries=${CONF_DNS_TRIES} "$1" | grep -om 1 "${REGEX}";;
-                "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W ${CONF_DNS_DURATION} -R ${CONF_DNS_TRIES} "$1" ${DNSSERVER} | tail -n1 | grep -om 1 "${REGEX}";;
+                "${CMD_DIG}" ) "${CMD}" ${DNSSERVER} +short -t "${TYPE}" +time="${CONF_DNS_DURATION}" +tries="${CONF_DNS_TRIES}" "$1" | grep -om 1 "${REGEX}";;
+                "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W "${CONF_DNS_DURATION}" -R "${CONF_DNS_TRIES}" "$1" ${DNSSERVER} | tail -n1 | grep -om 1 "${REGEX}";;
             esac
         fi
     }
@@ -462,9 +452,10 @@
         else
 
             local TYPE="txt"
+            # shellcheck disable=SC2086
             case "${CMD}" in
-                "${CMD_DIG}" ) "${CMD}" "${DNSSERVER}" +short -t "${TYPE}" +time="${CONF_DNS_DURATION}" +tries="${CONF_DNS_TRIES}" "$1" ;;
-                "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W "${CONF_DNS_DURATION}" -R "${CONF_DNS_TRIES}" "$1" "${DNSSERVER}" | tail -n1 ;;
+                "${CMD_DIG}" ) "${CMD}" ${DNSSERVER} +short -t "${TYPE}" +time="${CONF_DNS_DURATION}" +tries="${CONF_DNS_TRIES}" "$1" ;;
+                "${CMD_HOST}" ) "${CMD}" -t "${TYPE}" -W "${CONF_DNS_DURATION}" -R "${CONF_DNS_TRIES}" "$1" ${DNSSERVER} | tail -n1 ;;
             esac
         fi
     }
@@ -650,7 +641,7 @@ for BL in ${CONF_BLOCKLISTS}; do
 
             else
                 if [[ "${TARGET_TYPE}" == 'ip' && "${TYPE}" == 'URIBL' ]]; then
-                    info 0 "${GREEN}Notice: URIBL entry '${DOMAIN}' will be ignore, because ${TARGET} is an IP address${CLEAR}"
+                    info 1 "${GREEN}Notice: URIBL entry '${DOMAIN}' will be ignore, because ${TARGET} is an IP address${CLEAR}"
                 else
                 case "${TYPE}" in
                     "DNSBL") COUNT_DNSBL=$((COUNT_DNSBL + 1)) ;;
