@@ -32,7 +32,8 @@ If the IP is supplied, the PTR check cannot be executed and will be skipped.
 
 <pre>
 -d dnshost  Use host as DNS server to make lookups
--l file     Load blocklists from file, separated by space or new line
+-l filename Load blocklists from file, separated by space or new line
+-o filename Write results to filename instead of ~/blcheck_blocklists.txt
 -c          Warn if the top level domain of the blocklist has expired
 -v          Verbose mode, can be used multiple times (up to -vvv)
 -q          Quiet modem with absolutely no output (useful for scripts)

@@ -61,15 +61,15 @@
         rbl2.triumf.ca
         wbl.triumf.ca#DNSWL
         ipbl.zeustracker.abuse.ch
-        uribl.zeustracker.abuse.ch
+        uribl.zeustracker.abuse.ch#URIBL
         spamrbl.imp.ch
         wormrbl.imp.ch
         rbl.lugh.ch
         dnsrbl.swinog.ch
-        uribl.swinog.ch
+        uribl.swinog.ch#URIBL
         blacklist.woody.ch
         ipv6.blacklist.woody.ch
-        uri.blacklist.woody.ch
+        uri.blacklist.woody.ch#URIBL
         block.ascams.com
         superblock.ascams.com
         rbl.blockedservers.com
@@ -93,7 +93,7 @@
         0spamurl.fusionzero.com
         accredit.habeas.com
         hil.habeas.com
-        hul.habeas.com
+        hul.habeas.com#DNSWL
         sa-accredit.habeas.com
         sohul.habeas.com
         blacklist.hostkarma.com
@@ -158,7 +158,7 @@
         all.spam-rbl.fr
         pofon.foobar.hu
         ispmx.pofon.foobar.hu
-        uribl.pofon.foobar.hu
+        uribl.pofon.foobar.hu#URIBL
         singular.ttk.pte.hu
         blacklist.netcore.co.in
         dnsbl.rv-soft.info
@@ -178,13 +178,13 @@
         rbl.blakjak.net
         dul.blackhole.cantv.net
         hog.blackhole.cantv.net
-        rhsbl.blackhole.cantv.net
+        rhsbl.blackhole.cantv.net#URIBL
         rot.blackhole.cantv.net
         spam.blackhole.cantv.net
         rbl.choon.net
         ipv6.rbl.choon.net
-        rwl.choon.net
-        ipv6.rwl.choon.net
+        rwl.choon.net#DNSWL
+        ipv6.rwl.choon.net#DNSWL
         dnsbl.cyberlogic.net
         fnrbl.fast.net
         truncate.gbudb.net
@@ -193,7 +193,7 @@
         dnsbl.kempt.net
         spamguard.leadmon.net
         niprbl.mailcleaner.net
-        uribl.mailcleaner.net
+        uribl.mailcleaner.net#URIBL
         dnsbl.mailshell.net
         bl.mailspike.net
         rep.mailspike.net
@@ -206,25 +206,25 @@
         virus.rbl.msrbl.net
         web.rbl.msrbl.net
         relays.nether.net
-        trusted.nether.net
+        trusted.nether.net#DNSWL
         unsure.nether.net
         dul.pacifier.net
         all.s5h.net
         bl.scientificspam.net
-        rhsbl.scientificspam.net
+        rhsbl.scientificspam.net#URIBL
         korea.services.net
         bl.spamcop.net
         backscatter.spameatingmonkey.net
         bl.spameatingmonkey.net
-        fresh.spameatingmonkey.net
-        fresh10.spameatingmonkey.net
-        fresh15.spameatingmonkey.net
-        fresh30.spameatingmonkey.net
-        freshzero.spameatingmonkey.net
+        fresh.spameatingmonkey.net#URIBL
+        fresh10.spameatingmonkey.net#URIBL
+        fresh15.spameatingmonkey.net#URIBL
+        fresh30.spameatingmonkey.net#URIBL
+        freshzero.spameatingmonkey.net#URIBL
         bl.ipv6.spameatingmonkey.net
         netbl.spameatingmonkey.net
-        uribl.spameatingmonkey.net
-        urired.spameatingmonkey.net
+        uribl.spameatingmonkey.net#URIBL
+        urired.spameatingmonkey.net#URIBL
         bsb.spamlookup.net
         dnsbl.spfbl.net
         score.spfbl.net
@@ -241,7 +241,7 @@
         dnsbl-2.uceprotect.net
         dnsbl-3.uceprotect.net
         dnsbl.zapbl.net
-        rhsbl.zapbl.net
+        rhsbl.zapbl.net#URIBL
         rbl.zenon.net
         dnsbl.beetjevreemd.nl
         bitonly.dnsbl.bit.nl
@@ -251,8 +251,9 @@
         blackholes.tepucom.nl
         bl.konstant.no
         bl.0spam.org
+        wl.0spam.org#DNSWL
         nbl.0spam.org
-        url.0spam.org
+        url.0spam.org#URIBL
         orvedb.aupads.org
         rsbl.aupads.org
         ips.backscatterer.org
@@ -291,7 +292,7 @@
         rbl.schulte.org
         sbl.spamdown.org
         dbl.spamhaus.org#URIBL
-        vouch.dwl.spamhaus.org#DNSWL
+        _vouch.dwl.spamhaus.org#DNSWL
         pbl.spamhaus.org
         sbl.spamhaus.org
         sbl-xbl.spamhaus.org
@@ -299,9 +300,13 @@
         xbl.spamhaus.org
         zen.spamhaus.org
         abuse.surbl.org
+        abuse.surbl.org#URIBL
         cr.surbl.org
+        ct.surbl.org
         multi.surbl.org
+        multi.surbl.org#URIBL
         mw.surbl.org
+        ph.surbl.org
         dnsbl.tornevall.org
         opm.tornevall.org
         free.v4bl.org
@@ -314,9 +319,9 @@
         lblip6.rbl.polspam.pl
         rblip4.rbl.polspam.pl
         rblip6.rbl.polspam.pl
-        rhsbl.rbl.polspam.pl
+        rhsbl.rbl.polspam.pl#URIBL
         rbl.abuse.ro
-        uribl.abuse.ro
+        uribl.abuse.ro#URIBL
         vote.drbl.caravan.ru
         work.drbl.caravan.ru
         vote.drbl.gremlin.ru
@@ -324,14 +329,20 @@
         dul.dnsbl.sorbs.netdul.ru
         bl.shlink.orgdul.ru
         dnsbl.rymsho.ru
-        rhsbl.rymsho.ru
+        rhsbl.rymsho.ru#URIBL
         netblockbl.spamgrouper.to
         dnsbl.mcu.edu.tw
         dnsbl.net.ua
         rbl.fasthosts.co.uk
         torexit.dan.me.uk
         bsb.empty.us
-        88.blocklist.zap"
+        88.blocklist.zap
+        dnsbl.sorbs.net
+        spam.dnsbl.sorbs.net
+        rhsbl.sorbs.net#URIBL
+        nomail.rhsbl.sorbs.net#URIBL
+        badconf.rhsbl.xorbs.net#URIBL
+        ubl.lashback.com"
 
 
         # reputation/scoring pages
@@ -824,9 +835,9 @@ fi
 # shellcheck disable=SC2002
 failed=$(cat "$failed_file" | wc -l)
 if [ "$failed" -gt 0 ]; then
-    touch $output
-    echo "${TARGET}" >> $output
-    cat "$failed_file" >> $output
+    touch "$output"
+    echo "${TARGET}" >> "$output"
+    cat "$failed_file" >> "$output"
 fi
 
 rm -f "$passed_file" "$allow_file" "$invalid_file" "$failed_file"
