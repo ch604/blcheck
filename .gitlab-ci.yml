@@ -1,0 +1,4 @@
+shellcheck:
+  image: koalaman/shellcheck-alpine:v0.11.0
+  script:
+    - shellcheck -S warning blcheck
