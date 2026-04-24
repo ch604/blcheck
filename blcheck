@@ -286,8 +286,7 @@
         bad.virusfree.cz
         bip.virusfree.cz
         d.bl.zenrbl.pl#URIBL
-        ip4.bl.zenrbl.pl
-        rbl.rbldns.ru"
+        ip4.bl.zenrbl.pl"
 
     CONF_QUICKLISTS="
         rbl2.triumf.ca
